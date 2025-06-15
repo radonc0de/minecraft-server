@@ -1,6 +1,10 @@
 [Unit]
-Description=Start [SERVER] minecraft server
+Description=[SERVER] minecraft server
 
 [Service]
 Type=oneshot
+User=minecraft
+WorkingDirectory=[SERVER-PATH]
 ExecStart=[SERVER-PATH]/start.sh
+StandardOutput=append:/var/log/mc-theworld.log
+StandardError=append:/var/log/mc-theworld.log
