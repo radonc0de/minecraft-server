@@ -52,6 +52,7 @@ if [[ -z "$SERVER_NAME" || -z "$SERVER_PATH" ]]; then
 fi
 
 SYSDPATH="/etc/systemd/system"
+#SYSDPATH="./test/system"
 echo "Creating ./files/minecraft.service as $SYSDPATH/mc-$SERVER_NAME.service"
 echo "Creating ./files/minecraft.timer as $SYSDPATH/mc-$SERVER_NAME.timer"
 echo "Creating ./files/minecraft-backup.serivce as $SYSDPATH/mcbackup-$SERVER_NAME.service"
@@ -64,9 +65,9 @@ else
   #sed "s/[SERVER]/$SERVER_NAME/" ./files/minecraft.timer >$SYSDPATH/mc-$SERVER_NAME.timer
   #sed "s/[SERVER]/$SERVER_NAME/" ./files/minecraft-backup.service >$SYSDPATH/mcbackup-$SERVER_NAME.service
   #sed "s/[SERVER]/$SERVER_NAME/" ./files/minecraft-backup.timer >$SYSDPATH/mcbackup-$SERVER_NAME.timer
-  PATH=$(printf '%s\n' "$SERVER_PATH" | sed 's/[&/\]/\\&/g')
-  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$PATH/g" ./files/minecraft.service >"$SYSDPATH/mc-$SERVER_NAME.service"
-  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$PATH/g" ./files/minecraft.timer >"$SYSDPATH/mc-$SERVER_NAME.timer"
-  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$PATH/g" ./files/minecraft-backup.service >"$SYSDPATH/mcbackup-$SERVER_NAME.service"
-  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$PATH/g" ./files/minecraft-backup.timer >"$SYSDPATH/mcbackup-$SERVER_NAME.timer"
+  ESCPATH=$(printf '%s\n' "$SERVER_PATH" | sed 's/[&/\]/\\&/g')
+  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$ESCPATH/g" ./files/minecraft.service >"$SYSDPATH/mc-$SERVER_NAME.service"
+  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$ESCPATH/g" ./files/minecraft.timer >"$SYSDPATH/mc-$SERVER_NAME.timer"
+  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$ESCPATH/g" ./files/minecraft-backup.service >"$SYSDPATH/mcbackup-$SERVER_NAME.service"
+  sed -e "s/\[SERVER\]/$SERVER_NAME/g" -e "s/\[SERVER-PATH\]/$ESCPATH/g" ./files/minecraft-backup.timer >"$SYSDPATH/mcbackup-$SERVER_NAME.timer"
 fi
