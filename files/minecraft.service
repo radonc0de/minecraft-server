@@ -1,0 +1,6 @@
+[Unit]
+Description=Start [SERVER] minecraft server
+
+[Service]
+Type=oneshot
+ExecStart=[SERVER-PATH]/start.sh
